@@ -31,7 +31,7 @@
     "name": "Krzysztof Opalka"
   },
   "bin": {
-    "spritesheet-js": "index.js"
+    "ordered-sprite": "index.js"
   },
   "bugs": {
     "url": "https://github.com/krzysztof-o/spritesheet.js/issues"

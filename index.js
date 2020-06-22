@@ -84,7 +84,7 @@ if (!module.parent) {
     })
     .options('algorithm', {
       describe: 'packing algorithm: growing-binpacking (default), binpacking (requires passing --width and --height options), vertical or horizontal',
-      default: 'growing-binpacking'
+      default: 'file-index'
     })
     .options('width', {
       describe: 'width for binpacking',
@@ -105,6 +105,11 @@ if (!module.parent) {
     .options('divisibleByTwo', {
       describe: 'every generated frame coordinates should be divisible by two',
       default: false,
+      boolean: true
+    })
+    .options('ordered', {
+      describe: 'use custom layout instead of bin-packing',
+      default: true,
       boolean: true
     })
     .options('cssOrder', {
@@ -197,13 +202,7 @@ function generate(files, options, callback) {
 
 
   if (!fs.existsSync(options.path) && options.path !== '') fs.mkdirSync(options.path);
-  files = files
-    .filter(file => /\d+/.exec(file.name))
-    .sort((a, b) => {
-      const aIndex = /\d+/.exec(a.name)[0];
-      const bIndex = /\d+/.exec(b.name)[0];
-      return aIndex - bIndex;
-    });
+
   async.waterfall([
     function (callback) {
       generator.trimImages(files, options, callback);
